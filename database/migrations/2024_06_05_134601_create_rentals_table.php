@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('rental', function (Blueprint $table) {
             $table->id();
             $table->foreignId('garasi_id');
-            $table->foreignId('renter_id');
+            $table->foreignId('renter_id'); //user_id
             $table->date('tanggal_mulai');
             $table->date('tanggal_akhir');
-            $table->int('total_harga_sewa');
+            $table->integer('total_harga_sewa');
             $table->enum('status',['aktif','selesai','batal']);
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rentals');
+        Schema::dropIfExists('rental');
     }
 };

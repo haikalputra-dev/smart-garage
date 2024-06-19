@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_garasi');
             $table->string('lokasi');
-            $table->int('harga_sewa');
+            $table->integer('harga_sewa');
             $table->text('deskripsi');
             $table->enum('status',['tersedia','booked','rented']);
             $table->timestamps();
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('garasis');
+        Schema::dropIfExists('garasi');
     }
 };

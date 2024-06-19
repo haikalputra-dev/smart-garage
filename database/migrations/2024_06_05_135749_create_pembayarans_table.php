@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rental_id');
-            $table->int('jumlah_pembayaran');
+            $table->integer('jumlah_pembayaran');
             $table->date('waktu_pembayaran');
             $table->enum('status',['pending','selesai','batal']);
             $table->timestamps();
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembayarans');
+        Schema::dropIfExists('pembayaran');
     }
 };
