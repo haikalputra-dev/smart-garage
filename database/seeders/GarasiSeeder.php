@@ -26,7 +26,7 @@ class GarasiSeeder extends Seeder
         $garasi->lokasi = "Area A";
         $garasi->harga_sewa = 40000;
         $garasi->deskripsi = "Lorem Ipsum Dolor Sit Amet";
-        $garasi->status = "booked";
+        $garasi->status = "tersedia";
         $garasi->save();
 
         $garasi = new Garasi;
@@ -50,7 +50,7 @@ class GarasiSeeder extends Seeder
         $garasi->lokasi = "Area A";
         $garasi->harga_sewa = 40000;
         $garasi->deskripsi = "Lorem Ipsum Dolor Sit Amet";
-        $garasi->status = "booked";
+        $garasi->status = "tersedia";
         $garasi->save();
 
         $garasi = new Garasi;
@@ -58,7 +58,7 @@ class GarasiSeeder extends Seeder
         $garasi->lokasi = "Area B";
         $garasi->harga_sewa = 45000;
         $garasi->deskripsi = "Lorem Ipsum Dolor Sit Amet";
-        $garasi->status = "rented";
+        $garasi->status = "tersedia";
         $garasi->save();
     }
 }

@@ -1,34 +1,31 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\GarasiController;
+use App\Http\Controllers\SensorController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::get('/', [HomeController::class, 'landing'])->name('landing');
 
 
-// Landing page
-// Route::get('/', [AdminController::class, 'landing'])->name('landing');
-Route::get('/', function () {
-    return view('front.index');
-});
+Route::get('/logins', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/logins', [AuthController::class, 'login'])->name('login.post');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Authentication routes
-Auth::routes();
+// Registration Routes...
+Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+
 
 // Admin routes
 Route::middleware(['auth', 'cekRole:Admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/admin/log-garasi', [AdminController::class, 'logGarasi'])->name('admin.logGarasi');
+    Route::get('/logs', [AdminController::class, 'fetchLogs'])->name('logs.fetch');
 
+    /////////////////////STAFF/////////////////////
     // List Staff
     Route::get('/admin/master-staff', [AdminController::class, 'indexStaff'])->name('admin.masterStaff');
     // Create Staff
@@ -36,10 +33,24 @@ Route::middleware(['auth', 'cekRole:Admin'])->group(function () {
     Route::post('/admin/master-staff', [AdminController::class, 'storeStaff'])->name('admin.masterStaff.store');
     // Edit Staff
     Route::get('/admin/master-staff/{id}/edit', [AdminController::class, 'editStaff'])->name('admin.masterStaff.edit');
-    Route::put('/admin/master-staff/{id}', [AdminController::class, 'updateStaff'])->name('admin.masterStaff.update');
+    Route::put('/admin/master-staff/{id}', [AdminController::class, 'updateUser'])->name('admin.masterStaff.update');
     // Delete Staff
     Route::delete('/admin/master-staff/{id}', [AdminController::class, 'destroyStaff'])->name('admin.masterStaff.destroy');
 
+    /////////////////////PELANGGAN/////////////////////
+
+    // List Pelanggan
+    Route::get('/admin/master-pelanggan', [AdminController::class, 'indexPelanggan'])->name('admin.masterPelanggan');
+    // Create Pelanggan
+    Route::get('/admin/master-pelanggan/create', [AdminController::class, 'createPelanggan'])->name('admin.masterPelanggan.create');
+    Route::post('/admin/master-pelanggan', [AdminController::class, 'storePelanggan'])->name('admin.masterPelanggan.store');
+    // Edit Pelanggan
+    Route::get('/admin/master-pelanggan/{id}/edit', [AdminController::class, 'editPelanggan'])->name('admin.masterPelanggan.edit');
+    Route::put('/admin/master-pelanggan/{id}', [AdminController::class, 'updateUser'])->name('admin.masterPelanggan.update');
+    // Delete Pelanggan
+    Route::delete('/admin/master-pelanggan/{id}', [AdminController::class, 'destroyPelanggan'])->name('admin.masterPelanggan.destroy');
+
+    /////////////////////GARASI/////////////////////
     // List Garasi
     Route::get('/admin/master-garasi', [AdminController::class, 'indexGarasi'])->name('admin.masterGarasi');
     // Create Garasi
@@ -54,18 +65,25 @@ Route::middleware(['auth', 'cekRole:Admin'])->group(function () {
 
     Route::get('/admin/transaksi', [AdminController::class, 'transaksi'])->name('admin.transaksi');
     Route::get('/admin/riwayat-transaksi', [AdminController::class, 'riwayatTransaksi'])->name('admin.riwayatTransaksi');
+
+    Route::post('/confirm-payment', [GarasiController::class, 'confirmPayment'])->name('confirmPayment');
+    Route::post('/cancel-payment', [GarasiController::class, 'cancelPayment'])->name('cancelPayment');
+    Route::post('/complete-rental', [GarasiController::class, 'completeRental'])->name('completeRental');
 });
 
-// // Staff routes
-// Route::middleware(['auth', 'cekRole:Staff'])->group(function () {
-//     Route::get('/staff', function () {
-//         return view('staff.dashboard');
-//     })->name('staff.dashboard');
-// });
+Route::get('/sensor-suhu/{nilaisuhu}',[SensorController::class,'simpandata']);
+Route::get('/sensor-pintu/{status}',[SensorController::class,'log']);
+Route::get('/suhu',[SensorController::class,'getSuhu']);
+Route::get('/log',[SensorController::class,'getLog']);
 
-// // Pengguna routes
-// Route::middleware(['auth', 'cekRole:Pengguna'])->group(function () {
-//     Route::get('/pengguna', function () {
-//         return view('pengguna.dashboard');
-//     })->name('pengguna.dashboard');
-// });
+// Pelanggan routes
+Route::middleware(['auth', 'cekRole:Pelanggan'])->group(function () {
+    Route::get('/profil',[AuthController::class,'profilPengguna'])->name('profil.pengguna');
+
+    Route::get('/cek-garasi', [GarasiController::class, 'cekGarasi'])->name('cek.garasi');
+    Route::get('/cek-garasi/{lokasi}',[GarasiController::class,'cekGarasiDetail'])->name('cek.garasiDetail');
+    Route::get('/book-garasi/{id}', [GarasiController::class, 'bookGarasi'])->name('book.garasi');
+    Route::post('/book-garasi/checkout',[GarasiController::class, 'transaksiGarasi'])->name('pesan.garasi');
+    Route::get('/detail-transaksi/{id_pembayaran}',[GarasiController::class, 'detailTransaksi'])->name('detail.transaksi');
+    Route::post('/cancel-pesan', [GarasiController::class, 'cancelPayment'])->name('cancelPesan');
+});

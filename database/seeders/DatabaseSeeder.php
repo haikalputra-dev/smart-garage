@@ -8,6 +8,7 @@ use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\GarasiSeeder;
 use Database\Seeders\RentalSeeder;
+use Database\Seeders\DataSensorSeeder;
 use Database\Seeders\PembayaranSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -25,9 +26,10 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             UserSeeder::class,
-            RentalSeeder::class,
+            // RentalSeeder::class,
             GarasiSeeder::class,
-            PembayaranSeeder::class
+            // PembayaranSeeder::class,
+            DataSensorSeeder::class
         ]);
     }
 }

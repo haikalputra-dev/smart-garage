@@ -6,25 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('rental_id');
+            $table->foreignId('rental_id')->constrained('rental');
             $table->integer('jumlah_pembayaran');
-            $table->date('waktu_pembayaran');
-            $table->enum('status',['pending','selesai','batal']);
+            $table->date('waktu_pembayaran')->nullable();
+            $table->enum('status', ['pending', 'selesai', 'batal']);
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('pembayaran');
     }

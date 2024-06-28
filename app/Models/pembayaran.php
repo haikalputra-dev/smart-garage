@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Rental;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Pembayaran extends Model
 {
@@ -16,4 +17,9 @@ class Pembayaran extends Model
         'waktu_pembayaran',
         'status'
     ];
+
+    public function rental()
+    {
+        return $this->belongsTo(Rental::class);
+    }
 }

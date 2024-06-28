@@ -16,13 +16,13 @@
     <!-- Style -->
     <link rel="stylesheet" href="login/css/style.css">
 
-    <title>Login #2</title>
+    <title>Login | WheelHouse</title>
   </head>
   <body>
   
 
   <div class="d-lg-flex half">
-    <div class="bg order-1 order-md-2" style="background-image: url('images/bg_1.jpg');"></div>
+    <div class="bg order-1 order-md-2" style="background-image: url('foto/garasi2.jpg');"></div>
     <div class="contents order-2 order-md-1">
 
       <div class="container">
@@ -30,7 +30,7 @@
           <div class="col-md-7">
             <h3>Login to <strong>WheelHouse</strong></h3>
             <p class="mb-4">WheelHouse adalah platform online yang memudahkan penyewaan garasi untuk penyimpanan kendaraan.</p>
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login.post') }}">
                 @csrf
               <div class="form-group first">
                 <label for="email">Email</label>
@@ -60,8 +60,8 @@
               </div>
 
               <input type="submit" value="Log In" class="btn btn-block btn-primary">
-
             </form>
+            <a href="{{ route('register') }}" class="txt-secondary">Register</a>
           </div>
         </div>
       </div>
