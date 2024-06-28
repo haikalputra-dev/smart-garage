@@ -17,13 +17,12 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Registration Routes...
 Route::get('/register', [AuthController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
-
+Route::get('/logs', [AdminController::class, 'fetchLogs'])->name('logs.fetch');
 
 // Admin routes
 Route::middleware(['auth', 'cekRole:Admin'])->group(function () {
     Route::get('/admin', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/log-garasi', [AdminController::class, 'logGarasi'])->name('admin.logGarasi');
-    Route::get('/logs', [AdminController::class, 'fetchLogs'])->name('logs.fetch');
 
     /////////////////////STAFF/////////////////////
     // List Staff
@@ -70,6 +69,47 @@ Route::middleware(['auth', 'cekRole:Admin'])->group(function () {
     Route::post('/cancel-payment', [GarasiController::class, 'cancelPayment'])->name('cancelPayment');
     Route::post('/complete-rental', [GarasiController::class, 'completeRental'])->name('completeRental');
 });
+
+// Admin routes
+Route::middleware(['auth', 'cekRole:Staff'])->group(function () {
+    Route::get('/staff', [AdminController::class, 'dashboard'])->name('staff.dashboard');
+    Route::get('/staff/log-garasi', [AdminController::class, 'logGarasi'])->name('staff.logGarasi');
+    Route::get('/logs', [AdminController::class, 'fetchLogs'])->name('logs.fetch');
+
+    /////////////////////PELANGGAN/////////////////////
+
+    // List Pelanggan
+    Route::get('/staff/master-pelanggan', [AdminController::class, 'indexPelanggan'])->name('staff.masterPelanggan');
+    // Create Pelanggan
+    Route::get('/staff/master-pelanggan/create', [AdminController::class, 'createPelanggan'])->name('staff.masterPelanggan.create');
+    Route::post('/staff/master-pelanggan', [AdminController::class, 'storePelanggan'])->name('staff.masterPelanggan.store');
+    // Edit Pelanggan
+    Route::get('/staff/master-pelanggan/{id}/edit', [AdminController::class, 'editPelanggan'])->name('staff.masterPelanggan.edit');
+    Route::put('/staff/master-pelanggan/{id}', [AdminController::class, 'updateUser'])->name('staff.masterPelanggan.update');
+    // Delete Pelanggan
+    Route::delete('/staff/master-pelanggan/{id}', [AdminController::class, 'destroyPelanggan'])->name('staff.masterPelanggan.destroy');
+
+    /////////////////////GARASI/////////////////////
+    // List Garasi
+    Route::get('/staff/master-garasi', [AdminController::class, 'indexGarasi'])->name('staff.masterGarasi');
+    // Create Garasi
+    Route::get('/staff/master-garasi/create', [AdminController::class, 'createGarasi'])->name('staff.masterGarasi.create');
+    Route::post('/staff/master-garasi', [AdminController::class, 'storeGarasi'])->name('staff.masterGarasi.store');
+    // Edit Garasi
+    Route::get('/staff/master-garasi/{id}/edit', [AdminController::class, 'editGarasi'])->name('staff.masterGarasi.edit');
+    Route::put('/staff/master-garasi/{id}', [AdminController::class, 'updateGarasi'])->name('staff.masterGarasi.update');
+    // Delete Garasi
+    Route::delete('/staff/master-garasi/{id}', [AdminController::class, 'destroyGarasi'])->name('staff.masterGarasi.destroy');
+
+
+    Route::get('/staff/transaksi', [AdminController::class, 'transaksi'])->name('staff.transaksi');
+    Route::get('/staff/riwayat-transaksi', [AdminController::class, 'riwayatTransaksi'])->name('staff.riwayatTransaksi');
+
+    Route::post('/confirm-payment', [GarasiController::class, 'confirmPayment'])->name('confirmPayment');
+    Route::post('/cancel-payment', [GarasiController::class, 'cancelPayment'])->name('cancelPayment');
+    Route::post('/complete-rental', [GarasiController::class, 'completeRental'])->name('completeRental');
+});
+
 
 Route::get('/sensor-suhu/{nilaisuhu}',[SensorController::class,'simpandata']);
 Route::get('/sensor-pintu/{status}',[SensorController::class,'log']);

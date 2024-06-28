@@ -125,8 +125,13 @@
                   <li class="dropdown-header text-start">
                     <h6>Detail</h6>
                   </li>
-
+                  @if (Auth::user()->role=='Admin')
+                      
                   <li><a class="dropdown-item" href="{{ route('admin.masterPelanggan') }}">Buka Detail</a></li>
+                  @else
+      
+                  <li><a class="dropdown-item" href="{{ route('staff.masterPelanggan') }}">Buka Detail</a></li>
+                  @endif
                 </ul>
               </div>
 
@@ -182,7 +187,11 @@
                         <td>Area B</td>
                         <td class="fw-bold" id="suhu"></td>
                         <td id="log"></td>
+                        @if (Auth::user()->role=="Admin")
                         <td><a href="{{ route('admin.logGarasi') }}">Buka Log</a></td>
+                        @else
+                        <td><a href="{{ route('staff.logGarasi') }}">Buka Log</a></td>
+                        @endif
                       </tr>
                     </tbody>
                   </table>

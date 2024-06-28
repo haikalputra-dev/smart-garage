@@ -62,7 +62,7 @@
                             @if ( Auth::user()->role == 'Pelanggan' )
                                 <a href="{{ route('profil.pengguna') }}" class="bk-btn">{{ Auth::user()->nama }}</a>
                                 @elseif(Auth::user()->role == 'Staff')
-                                <a href="{{ route('admin.dashboard') }}" class="bk-btn">{{ Auth::user()->nama }}</a>
+                                <a href="{{ route('staff.dashboard') }}" class="bk-btn">{{ Auth::user()->nama }}</a>
                                 @elseif(Auth::user()->role == 'Admin')
                                 <a href="{{ route('admin.dashboard') }}" class="bk-btn">{{ Auth::user()->nama }}</a>
                             @else

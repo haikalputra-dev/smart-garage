@@ -50,7 +50,6 @@ use Carbon\Carbon;
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Add your data rows here -->
                             @foreach ($rentals as $rental)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
@@ -60,17 +59,18 @@ use Carbon\Carbon;
                                 <td>
                                     @if ($rental->status == "selesai")
                                         <span class="badge bg-success" style="font-size: 15px">{{ ucfirst($rental->status) }}</span>
-                                        @elseif($rental->status == "pending")
+                                    @elseif($rental->status == "pending")
                                         <span class="badge bg-warning" style="font-size: 15px">{{ ucfirst($rental->status) }}</span>
-                                        @elseif($rental->status == "batal")
+                                    @elseif($rental->status == "batal")
                                         <span class="badge bg-danger" style="font-size: 15px">{{ ucfirst($rental->status) }}</span>
                                     @endif
                                 </td>
-                                <td><a href="{{ route('detail.transaksi', ['id_pembayaran' => $rental->id]) }}">Detail</a></td>
+                                <td><a href="{{ route('detail.transaksi', ['id_pembayaran' => $rental->pembayaran->id]) }}">Detail</a></td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
+                    
                 </div>
             </div>
         </div>

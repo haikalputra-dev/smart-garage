@@ -79,7 +79,11 @@ class AuthController extends Controller
 
     public function profilPengguna() {
         $user = User::where('id', Auth::user()->id)->where('role', 'Pelanggan')->firstOrFail();
-        $rentals = Rental::where('renter_id', Auth::user()->id)->with('garasi')->orderBy('created_at','desc')->get();
+        $rentals = Rental::where('renter_id', Auth::user()->id)
+                         ->with('garasi', 'pembayaran') // Assuming there's a relation to `pembayaran`
+                         ->orderBy('created_at', 'desc')
+                         ->get();
         return view('front.profil_pengguna', compact('rentals'));
     }
+    
 }

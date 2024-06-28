@@ -28,11 +28,11 @@ class Rental extends Model
 
     public function garasi()
     {
-        return $this->belongsTo(Garasi::class);
+        return $this->belongsTo(Garasi::class,'garasi_id');
     }
 
     public function pembayaran()
     {
-        return $this->hasOne(Pembayaran::class);
+        return $this->hasOne(Pembayaran::class,'rental_id');
     }
 }
