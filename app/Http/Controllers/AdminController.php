@@ -178,16 +178,14 @@ public function dashboard()
     /**
      * Remove the specified resource from storage.
      */
-    public function destroyStaff(User $user)
+    public function destroyStaff(string $id)
     {
-        $user->delete();
-
+        User::destroy($id);
         return redirect()->back();
     }
-    public function destroyPelanggan(User $user)
+    public function destroyPelanggan(string $id)
     {
-        $user->delete();
-
+        User::destroy($id);
         return redirect()->back();
     }
 
